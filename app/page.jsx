@@ -1,9 +1,11 @@
-import Link from "next/link"
+import Hero from "../components/Hero"
+import InfoBoxes from "../components/InfoBoxes"
 
 const Homepage = () => {
   return (
     <div>
-        Homepage
+        <Hero />
+        <InfoBoxes />
     </div>
   )
 }

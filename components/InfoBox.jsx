@@ -1,11 +1,11 @@
 
-const InfoBox = (
+const InfoBox = ({
     headings,
     backgroundColor = 'bg-gray-100',
     textColor = 'text-gray-800',
     buttonInfo,
     children
-) => {
+}) => {
     return (
         <div>
             <div className={`${backgroundColor} p-6 rounded-lg shadow-md`}>

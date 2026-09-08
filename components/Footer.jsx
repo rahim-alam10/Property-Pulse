@@ -2,7 +2,7 @@ import Image from "next/image"
 import logo from '../assets/images/logo.png'
 
 const Footer = () => {
-    const currentYear = new Date.getFullYear();
+    const currentYear = new Date().getFullYear();
 
     return (
         <div>

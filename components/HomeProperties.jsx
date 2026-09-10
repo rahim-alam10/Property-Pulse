@@ -1,13 +1,9 @@
-import { useMemo } from 'react';
 import Link from 'next/link';
 import properties from '@/properties.json';
 import PropertyCard from '../components/PropertyCard';
 
 const HomeProperties = () => {
-    const recentProperties = useMemo(
-        () => [...properties].sort(() => Math.random() - Math.random()).slice(0, 3),
-        []
-    );
+    const recentProperties = properties.slice(0, 3);
 
     return (
         <div>

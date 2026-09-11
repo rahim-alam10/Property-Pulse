@@ -1,8 +1,24 @@
 import Link from 'next/link';
-import properties from '@/properties.json';
 import PropertyCard from '../components/PropertyCard';
 
-const HomeProperties = () => {
+async function fetchProperties() {
+    try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_DOMAIN}/properties`);
+
+        if (!res.ok) {
+            throw new Error('Failed to fetch data');
+        }
+
+        return res.json();
+
+    } catch (error) {
+        console.log("Fetch Properties Error: ", error)
+    }
+}
+
+const HomeProperties = async() => {
+    const properties = await fetchProperties();
+
     const recentProperties = properties.slice(0, 3);
 
     return (
@@ -28,7 +44,7 @@ const HomeProperties = () => {
                 <Link
                     href="/properties"
                     className="block bg-black text-white text-center py-4 px-6 rounded-xl hover:bg-gray-700"
-                > 
+                >
                     View All Properties
                 </Link>
             </section>

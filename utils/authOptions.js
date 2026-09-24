@@ -5,10 +5,12 @@ export const authOptions = {
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+            // how this application asks Google for authorization.
             authorization: {
                 params: {
-                    prompt: "consent",
-                    access_type: "offline",
+                    prompt: "consent",          //This tells Google to show the consent screen.
+                    access_type: "offline",     //receive a refresh token.
+                    // A refresh token can be used to obtain a new access token without requiring the user to log in again.
                     response_type: "code"
                 }
             }

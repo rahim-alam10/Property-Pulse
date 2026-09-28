@@ -1,10 +1,10 @@
-import connecDB from "@/config/database.js";
+import connectDB from "@/config/connectDB.js";
 import Property from "@/models/Property.model.js";
 
 //GET/api/properties
 export const GET = async (request) => {
     try {
-        await connecDB();
+        await connectDB();
 
         const properties = await Property.find({});
 

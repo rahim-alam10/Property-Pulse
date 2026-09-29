@@ -1,10 +1,10 @@
-import connecDB from "@/config/database.js";
+import connectDB from "@/config/connectDB.js";
 import Property from "@/models/Property.model.js";
 
 //GET/api/properties/:id
 export const GET = async (request, {params}) => {
     try {
-        await connecDB();
+        await connectDB();
 
         const { id } = await params;
         const property = await Property.findById(id);
@@ -20,7 +20,7 @@ export const GET = async (request, {params}) => {
     } catch (error) {
         console.log("GET request Error: ",error)
 
-        return new Response("Something wnet wrong", {
+        return new Response("Something went wrong", {
             status: 500
         });
     }

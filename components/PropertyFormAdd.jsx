@@ -1,7 +1,14 @@
-import React from 'react'
+'use client';
+import { useState, useEffect } from "react";
 
 const PropertyFormAdd = () => {
-    return (
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true)
+    }, []);
+
+    return mounted &&
         <form>
             <h2 className="text-3xl text-center font-semibold mb-6">
                 Add Property
@@ -500,7 +507,6 @@ const PropertyFormAdd = () => {
                 </button>
             </div>
         </form>
-    )
 }
 
 export default PropertyFormAdd

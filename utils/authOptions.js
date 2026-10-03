@@ -18,6 +18,7 @@ export const authOptions = {
             }
         })
     ],
+
     callbacks: {
         //Invoked Successfull SignIn
         async signIn({profile}){
@@ -40,6 +41,8 @@ export const authOptions = {
         },
         // Modifies the Session Object
         async session({session}){
+            //
+            await connectDB();
             // 1. Get User from database
             const user  = await User.findOne({email: session.user.email})
 

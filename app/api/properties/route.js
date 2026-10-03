@@ -1,5 +1,6 @@
 import connectDB from "@/config/connectDB.js";
 import Property from "@/models/Property.model.js";
+import mongoose from "mongoose";
 
 //GET/api/properties
 export const GET = async (request) => {

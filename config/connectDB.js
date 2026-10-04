@@ -1,51 +1,33 @@
-import mongoose from "mongoose";
+// lib/mongodb.js
+import mongoose from 'mongoose';
 
-let connected = false;
+const MONGODB_URI = process.env.MONGODB_URI;
 
-const connectDB =async () => {
+if (!MONGODB_URI) {
+  throw new Error('MONGODB_URI is not set');
+}
 
-    mongoose.set('strictQuery', true)
+let cached = global.mongoose;
 
-    // If databse is already  connected donot connect it again
-    if(connected){
-        console.log("MongoDB already connected ")
-        return;
-    }
+if (!cached) {
+  cached = global.mongoose = { conn: null, promise: null };
+}
 
-    // Connect Mongo DB
-    try {
-        await mongoose.connect(process.env.MONGODB_URI);
-        connected = true;
-        console.log("MongoDB Connected Successfully")
-    } catch (error) {
-        console.log("MongoDB Connection Error: ",error)
-    }
+async function connectDB() {
+  if (cached.conn) {
+    return cached.conn;
+  }
 
+  if (!cached.promise) {
+    cached.promise = mongoose.connect(MONGODB_URI, {
+      bufferCommands: false,
+      serverSelectionTimeoutMS: 5000, // fail fast instead of hanging
+      maxPoolSize: 5, // small pool for serverless
+    }).then((mongoose) => mongoose);
+  }
+
+  cached.conn = await cached.promise;
+  return cached.conn;
 }
 
 export default connectDB;
-
-// config/connectDB.js
-// import mongoose from "mongoose";
-
-// let cached = global.mongoose;
-// if (!cached) cached = global.mongoose = { conn: null, promise: null };
-
-// export default async function connectDB() {
-//   if (cached.conn) return cached.conn;
-
-//   if (!cached.promise) {
-//     cached.promise = mongoose.connect(process.env.MONGODB_URI, {
-//       serverSelectionTimeoutMS: 10000,
-//       bufferCommands: false,  // fail fast instead of buffering
-//     });
-//   }
-
-//   try {
-//     cached.conn = await cached.promise;
-//   } catch (err) {
-//     cached.promise = null;
-//     throw err;
-//   }
-//   return cached.conn;
-// }
